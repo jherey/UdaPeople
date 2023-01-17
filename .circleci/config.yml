@@ -192,13 +192,13 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
-            apk add --update nodejs
-            apk add --update npm
-            apk add --update aws-cli
-            apk add --update tar
-            apk add --update gzip
-            apk add --update curl
+            apk add --update --no-cache ansible
+            apk add --update --no-cache nodejs
+            apk add --update --no-cache npm
+            apk add --update --no-cache aws-cli
+            apk add --update --no-cache tar
+            apk add --update --no-cache gzip
+            apk add --update --no-cache curl
       - run:
           name: Get backend url
           command: |
@@ -214,6 +214,7 @@ jobs:
           name: Deploy frontend objects
           command: |
             cd frontend
+            export NODE_OPTIONS=--openssl-legacy-provider
             npm install
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
@@ -232,7 +233,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update tar gzip ansible nodejs npm aws-cli
+            apk add --update --no-cache tar gzip ansible nodejs npm aws-cli
       - run:
           name: Deploy backend
           command: |
