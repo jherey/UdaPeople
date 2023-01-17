@@ -140,7 +140,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.12-alpine3.17
     steps:
       - checkout
       - add_ssh_keys:
@@ -150,7 +150,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update tar gzip ansible aws-cli
+            apk add --update --no-cache tar gzip ansible aws-cli
       - run:
           name: Configure server
           command: |
@@ -183,7 +183,7 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.12-alpine3.17
     steps:
       - checkout
       - attach_workspace:
@@ -221,7 +221,7 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.12-alpine3.17
     steps:
       - checkout
       - add_ssh_keys:
