@@ -28,3 +28,18 @@
     global: yes
     production: yes
     state: present
+
+- name: "Copy artifact"
+  become: true
+  copy:
+    src: ~/project/artifact.tar.gz
+    dest: /home/ubuntu/artifact.tar.gz
+
+- name: "Start web server with pm2"
+  become: true
+  shell: |
+    cd /home/ubuntu
+    tar xzvf artifact.tar.gz
+    npm install
+    pm2 stop default
+    pm2 start npm -- start
