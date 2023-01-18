@@ -336,6 +336,18 @@ jobs:
           command: |
             yum install -y tar gzip
       - run:
+          name: Log old workflow id
+          command: |
+            export OldWorkflowID=$(aws cloudformation \
+              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+              --no-paginate --output text)
+            echo $OldWorkflowID >> ~/OldWorkflowID.txt
+            cat ~/OldWorkflowID.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - OldWorkflowID.txt
+      - run:
           name: Update cloudfront distribution
           command: |
             aws cloudformation deploy \
@@ -343,6 +355,8 @@ jobs:
               --stack-name InitialStack \
               --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople
+            echo OldWorkflowID: cat ~/OldWorkflowID.txt
+            echo CurrentWorflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
