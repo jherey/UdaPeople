@@ -1,4 +1,4 @@
 URLs
 
 - URL01 - https://github.com/jherey/UdaPeople
-- URL02 - http://udapeople-d40d23e.s3-website-us-east-1.amazonaws.com
+- URL02 - http://udapeople-359c977.s3-website-us-east-1.amazonaws.com
